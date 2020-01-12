@@ -51,8 +51,10 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0}
   oldPosition: {x: 0, y: 0}
   isInsideGrid: 0
+  isInsideBackground: 0
   isBeingHeld: 0
-  isCollidingWithTile: 0
+  isLockedIn: 0
+  isInsideTile: 0
 --- !u!50 &330505025
 Rigidbody2D:
   serializedVersion: 4
@@ -99,12 +101,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1, y: 1.5}
-      - {x: -1, y: -1.5}
-      - {x: 0, y: -1.5}
-      - {x: 0, y: -0.5}
-      - {x: 1, y: -0.5}
-      - {x: 1, y: 1.5}
+    - - {x: -0.9, y: 1.4}
+      - {x: -0.9, y: -1.4}
+      - {x: -0.1, y: -1.4}
+      - {x: -0.1, y: -0.4}
+      - {x: 0.9, y: -0.4}
+      - {x: 0.9, y: 1.4}
 --- !u!1 &8457677475739271582
 GameObject:
   m_ObjectHideFlags: 0

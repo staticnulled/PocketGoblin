@@ -131,8 +131,10 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0}
   oldPosition: {x: 0, y: 0}
   isInsideGrid: 0
+  isInsideBackground: 0
   isBeingHeld: 0
-  isCollidingWithTile: 0
+  isLockedIn: 0
+  isInsideTile: 0
 --- !u!50 &2105409502451940315
 Rigidbody2D:
   serializedVersion: 4
@@ -179,15 +181,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.5, y: 2.5}
-      - {x: -0.5, y: 2.5}
-      - {x: -0.5, y: 0.5}
-      - {x: -1.5, y: 0.5}
-      - {x: -1.5, y: -0.5}
-      - {x: -0.5, y: -0.5}
-      - {x: -0.5, y: -1.5}
-      - {x: 0.5, y: -1.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 1.5, y: -0.5}
-      - {x: 1.5, y: 0.5}
-      - {x: 0.5, y: 0.5}
+    - - {x: 0.4, y: 2.4}
+      - {x: -0.4, y: 2.4}
+      - {x: -0.4, y: 0.4}
+      - {x: -1.4, y: 0.4}
+      - {x: -1.4, y: -0.4}
+      - {x: -0.4, y: -0.4}
+      - {x: -0.4, y: -1.4}
+      - {x: 0.4, y: -1.4}
+      - {x: 0.4, y: -0.4}
+      - {x: 1.4, y: -0.4}
+      - {x: 1.4, y: 0.4}
+      - {x: 0.4, y: 0.4}

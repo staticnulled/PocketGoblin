@@ -14,7 +14,7 @@ public class Draggable : MonoBehaviour
     [SerializeField] private bool isLockedIn = false;
     [SerializeField] private bool isInsideTile = false;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isLockedIn)
         {
@@ -22,29 +22,39 @@ public class Draggable : MonoBehaviour
             {
                 isInsideGrid = true;
             }
-            else
+            else if (collision.CompareTag("Background"))
+            {
+                isInsideBackground = true;
+            }            
+            else if (collision.CompareTag("Tile"))
+            {
+                isInsideTile = true;
+            }            
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!isLockedIn)
+        {
+            if (collision.CompareTag("Grid"))            
             {
                 isInsideGrid = false;
             }
-
-            if (collision.CompareTag("Background"))
-            {
-                isInsideBackground = true;
-            }
-            else
+            else if (collision.CompareTag("Background"))
             {
                 isInsideBackground = false;
             }
-
-            if (collision.CompareTag("Tile"))
-            {
-                isInsideTile = true;
-            }
-            else
+            else if (collision.CompareTag("Tile"))            
             {
                 isInsideTile = false;
             }
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        
 
         //if (isBeingHeld && isInsideGrid & collision.CompareTag("Tile"))
         //{
@@ -73,7 +83,7 @@ public class Draggable : MonoBehaviour
 
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (isInsideGrid && !isInsideBackground)
+            if (isInsideGrid && !isInsideBackground && !isInsideTile)
             {             
                 //snap to grid
                 gameObject.transform.localPosition = new Vector2(
