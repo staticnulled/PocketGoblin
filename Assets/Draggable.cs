@@ -10,27 +10,40 @@ public class Draggable : MonoBehaviour
     [SerializeField] private Vector2 oldPosition;
     [SerializeField] private bool isInsideGrid = false;
     [SerializeField] private bool isInsideBackground = false;    
-    [SerializeField] private bool isBeingHeld = false;        
+    [SerializeField] private bool isBeingHeld = false;
+    [SerializeField] private bool isLockedIn = false;
+    [SerializeField] private bool isInsideTile = false;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        
-        if (collision.CompareTag("Grid"))
+        if (!isLockedIn)
         {
-            isInsideGrid = true;
-        }
-        else
-        {
-            isInsideGrid = false;
-        }
+            if (collision.CompareTag("Grid"))
+            {
+                isInsideGrid = true;
+            }
+            else
+            {
+                isInsideGrid = false;
+            }
 
-        if (collision.CompareTag("Background"))
-        {
-            isInsideBackground = true;
-        }
-        else
-        {
-            isInsideBackground = false;
+            if (collision.CompareTag("Background"))
+            {
+                isInsideBackground = true;
+            }
+            else
+            {
+                isInsideBackground = false;
+            }
+
+            if (collision.CompareTag("Tile"))
+            {
+                isInsideTile = true;
+            }
+            else
+            {
+                isInsideTile = false;
+            }
         }
 
         //if (isBeingHeld && isInsideGrid & collision.CompareTag("Tile"))
@@ -47,9 +60,17 @@ public class Draggable : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
         if (isBeingHeld)
-        {            
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("rightclick");
+                transform.Rotate(Vector3.forward * -90);
+                //TODO:recenter object on rotate
+                gameObject.transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            }
+
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if (isInsideGrid && !isInsideBackground)
@@ -78,10 +99,12 @@ public class Draggable : MonoBehaviour
             startPosY = mousePos.y - this.transform.localPosition.y;
 
             oldPosition = this.transform.localPosition;
-            
-                        
-            isBeingHeld = true;            
+
+            isLockedIn = false;
+            isBeingHeld = true;
         }
+
+        
     }
 
     //Release the tile
@@ -98,6 +121,11 @@ public class Draggable : MonoBehaviour
         {
             this.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
         }
+
+        if (IsValidFinalPlacement() && isInsideGrid)
+        {
+            isLockedIn = true;
+        }
     }
 
     private bool IsValidFinalPlacement()
@@ -111,6 +139,11 @@ public class Draggable : MonoBehaviour
         }
         //In neither. Means colliding with other tile in grid or off screen.
         else if (!isInsideGrid && !isInsideBackground)
+        {
+            isValidPosition = false;
+        }
+        //Inside tile and grid. outside of bg. Invalid
+        else if (isInsideGrid && isInsideTile)
         {
             isValidPosition = false;
         }
