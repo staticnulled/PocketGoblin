@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8457677474639783532}
   - component: {fileID: 779730200846498997}
-  - component: {fileID: 3213436939742762654}
   - component: {fileID: 330505025}
+  - component: {fileID: 3213436939742762654}
   m_Layer: 0
   m_Name: Axe
   m_TagString: Tile
@@ -46,6 +46,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486fa0a8209f9034bad1d6fc7c082465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosX: 0
+  startPosY: 0
+  mousePos: {x: 0, y: 0}
+  oldPosition: {x: 0, y: 0}
+  isInsideGrid: 0
+  isBeingHeld: 0
+  isCollidingWithTile: 0
+--- !u!50 &330505025
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457677474639783535}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!60 &3213436939742762654
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -77,27 +105,6 @@ PolygonCollider2D:
       - {x: 0, y: -0.5}
       - {x: 1, y: -0.5}
       - {x: 1, y: 1.5}
---- !u!50 &330505025
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8457677474639783535}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &8457677475739271582
 GameObject:
   m_ObjectHideFlags: 0

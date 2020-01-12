@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tile
   - Grid
+  - Background
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Dragging
+    uniqueID: 332818483
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

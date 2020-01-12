@@ -4,76 +4,73 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-
-
     [SerializeField] private float startPosX;
     [SerializeField] float startPosY;
     [SerializeField] private Vector2 mousePos;
     [SerializeField] private Vector2 oldPosition;
     [SerializeField] private bool isInsideGrid = false;
-    [SerializeField] private bool isBeingHeld = false;    
-    [SerializeField] private bool isCollidingWithTile = false;    
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {     
-        isInsideGrid = true;
-        
-    }
+    [SerializeField] private bool isInsideBackground = false;    
+    [SerializeField] private bool isBeingHeld = false;        
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log(gameObject.GetComponent<Collider2D>().bounds.Intersects(collision.bounds));
-
+        
         if (collision.CompareTag("Grid"))
         {
             isInsideGrid = true;
         }
-
-        if (isBeingHeld && isInsideGrid & collision.CompareTag("Tile"))
+        else
         {
-            
-            isCollidingWithTile = true;
+            isInsideGrid = false;
+        }
+
+        if (collision.CompareTag("Background"))
+        {
+            isInsideBackground = true;
         }
         else
         {
-            
-            isCollidingWithTile = false;
+            isInsideBackground = false;
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {        
-        isInsideGrid = false;
+        //if (isBeingHeld && isInsideGrid & collision.CompareTag("Tile"))
+        //{
+        //    var collisionDirection = (gameObject.transform.position - collision.transform.position);
+
+        //       isCollidingWithTile = true;
+        //}
+        //else
+        //{            
+        //    isCollidingWithTile = false;
+        //}
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (isInsideGrid) Debug.Log("is inside grid");
-
-            if (isBeingHeld)
-            {            
+    {        
+        if (isBeingHeld)
+        {            
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (isInsideGrid)
+            if (isInsideGrid && !isInsideBackground)
             {             
                 //snap to grid
                 gameObject.transform.localPosition = new Vector2(
-                  Mathf.Round((mousePos.x - startPosX) * 1),
-                  Mathf.Round((mousePos.y - startPosY) * 1));
+                    Mathf.Round((mousePos.x - startPosX) * 1),
+                    Mathf.Round((mousePos.y - startPosY) * 1));
             }
             else
             {
                 //free form drag
                 gameObject.transform.localPosition = new Vector2(mousePos.x - startPosX, mousePos.y - startPosY);
             }
-
-
         }
     }
 
+    //Move the piece on LMB hold
     private void OnMouseDown()
     {
+        this.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
         if (Input.GetMouseButtonDown(0))
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -82,19 +79,47 @@ public class Draggable : MonoBehaviour
 
             oldPosition = this.transform.localPosition;
             
-            isBeingHeld = true;
+                        
+            isBeingHeld = true;            
         }
     }
 
+    //Release the tile
     private void OnMouseUp()
     {
         isBeingHeld = false;
 
-        if (isCollidingWithTile)
+        if (!IsValidFinalPlacement())
         {
             gameObject.transform.position = oldPosition;
-            isCollidingWithTile = false;
-        }        
+            this.GetComponentInChildren<SpriteRenderer>().sortingOrder = 0;
+        }
+        else
+        {
+            this.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
+    }
+
+    private bool IsValidFinalPlacement()
+    {
+        bool isValidPosition;
+
+        //Part way in two zones. Bad placement.
+        if (isInsideGrid && isInsideBackground)
+        {
+            isValidPosition = false;
+        }
+        //In neither. Means colliding with other tile in grid or off screen.
+        else if (!isInsideGrid && !isInsideBackground)
+        {
+            isValidPosition = false;
+        }
+        else
+        {
+            isValidPosition = true;
+        }
+        return isValidPosition;
+
     }
 }
 
