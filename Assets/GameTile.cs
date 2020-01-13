@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class GameTile : MonoBehaviour
 
     public BoardManager boardManager;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (!isLockedIn)
         {
@@ -29,20 +30,39 @@ public class GameTile : MonoBehaviour
             else if (collision.CompareTag("Background"))
             {
                 isInsideBackground = true;
-            }            
+            }
             else if (collision.CompareTag("Tile"))
             {
                 isInsideTile = true;
-            }            
+            }
         }
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (!isLockedIn)
+    //    {
+    //        if (collision.CompareTag("Grid"))
+    //        {
+    //            isInsideGrid = true;
+    //        }
+    //        else if (collision.CompareTag("Background"))
+    //        {
+    //            isInsideBackground = true;
+    //        }            
+    //        else if (collision.CompareTag("Tile"))
+    //        {
+    //            isInsideTile = true;
+    //        }            
+    //    }
+    //}
 
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!isLockedIn)
         {
-            if (collision.CompareTag("Grid"))            
+            if (collision.CompareTag("Grid"))
             {
                 isInsideGrid = false;
             }
@@ -50,7 +70,7 @@ public class GameTile : MonoBehaviour
             {
                 isInsideBackground = false;
             }
-            else if (collision.CompareTag("Tile"))            
+            else if (collision.CompareTag("Tile"))
             {
                 isInsideTile = false;
             }
@@ -62,6 +82,10 @@ public class GameTile : MonoBehaviour
     {
         if (isBeingHeld)
         {
+
+            //TODO: Fix collision bugging out and allowing invalid placements
+            //WhatIsColliding();
+
             if (Input.GetMouseButtonDown(1))
             {                
                 transform.Rotate(Vector3.forward * -90);
@@ -74,16 +98,48 @@ public class GameTile : MonoBehaviour
 
             //Enable snapping when:
             if (isInsideGrid && !isInsideBackground && !isInsideTile)
-            {             
+            {   
                 //snap to grid
                 gameObject.transform.localPosition = new Vector2(
                     Mathf.Round((mousePos.x - startPosX) * 1),
                     Mathf.Round((mousePos.y - startPosY) * 1));
             }
             else
-            {
+            { 
                 //free form drag
                 gameObject.transform.localPosition = new Vector2(mousePos.x - startPosX, mousePos.y - startPosY);
+            }
+        }
+    }
+
+    private void WhatIsColliding()
+    {
+        List<Collider2D> colliders = new List<Collider2D>();
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        Physics2D.OverlapCollider(GetComponent<Collider2D>(), contactFilter, colliders);
+
+        isInsideGrid = true;
+        isInsideBackground = true;
+        isInsideTile = true;
+
+        foreach (Collider2D collider in colliders)
+        {
+            Debug.Log(collider.name);
+            if (!isLockedIn)
+            {
+                if (collider.CompareTag("Grid"))
+                {
+                    Debug.Log("grid");
+                    isInsideGrid = false;
+                }
+                else if (collider.CompareTag("Background"))
+                {
+                    isInsideBackground = false;
+                }
+                else if (collider.CompareTag("Tile"))
+                {
+                    isInsideTile = false;
+                }
             }
         }
     }

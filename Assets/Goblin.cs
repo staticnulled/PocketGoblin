@@ -20,7 +20,7 @@ public class Goblin : MonoBehaviour
     {
 
         float mousePosX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        Debug.Log(spriteR.sprite);
+        //Debug.Log(spriteR.sprite);
 
         if (mousePosX < -5f)
         {
