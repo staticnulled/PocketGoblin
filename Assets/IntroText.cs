@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartButton : MonoBehaviour
+public class IntroText : MonoBehaviour
 {
+    [SerializeField] float loadLevelDelay = 3f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("LoadFirstLevel", loadLevelDelay);
+    }
+
+    private void LoadFirstLevel()
+    {
+        Debug.Log("Loading Level 1");
+        SceneManager.LoadSceneAsync("Level1");
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    private void OnMouseDown()
-    {        
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Loading Intro Text");
-            SceneManager.LoadSceneAsync("IntroText");
-        }
     }
 }

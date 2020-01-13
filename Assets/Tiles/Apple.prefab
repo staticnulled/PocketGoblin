@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1348412166}
   m_Layer: 0
   m_Name: Apple
-  m_TagString: Tile
+  m_TagString: TemplateTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +130,8 @@ MonoBehaviour:
   isBeingHeld: 0
   isLockedIn: 0
   isInsideTile: 0
+  isValidPosition: 0
+  boardManager: {fileID: 0}
 --- !u!50 &1348412166
 Rigidbody2D:
   serializedVersion: 4

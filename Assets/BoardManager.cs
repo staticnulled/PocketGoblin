@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
-{    
+{
     private const float GRID_HEIGHT = 5.0f;
     private const float GRID_WIDTH = 5.0f;
     [SerializeField] private int occupiedSpacesCount = 0;
-    
+
     [SerializeField] private bool[,] boardState = new bool[5, 5];
     public bool[,] BoardState { get => boardState; set => boardState = value; }
-
-    private bool CheckIfValidPlacement()
-    {
-
-        return false;
-    }
 
 
     // Start is called before the first frame update
     void Start()
-    {   
-        
+    {
+
     }
 
 
     // Update is called once per frame
     void Update()
-    {        
+    {   
+    }
+
+    public void DetermineBoardState()
+    {
         //count grid
         occupiedSpacesCount = 0;
 
@@ -48,14 +46,5 @@ public class BoardManager : MonoBehaviour
                 }
             }
         }
-
-        //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        //if (occupiedSpacesCount != 0)
-        //{
-            //Debug.Log(occupiedSpacesCount);
-        //}
-        
     }
-    
-    
 }
