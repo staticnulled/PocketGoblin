@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimedSpawn : MonoBehaviour
 {
@@ -13,21 +15,40 @@ public class TimedSpawn : MonoBehaviour
     public bool isAnimating = false;
     public float handDelay = 0.25f;
     private Vector2 direction = Vector2.down;
-    static private GameObject generatedTile;
+    private GameObject generatedTile;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip newItemAvailableSound;
+    [SerializeField] private int spawnLimit = 10;
+    [SerializeField] private int spawnCount = 0;
+    [SerializeField] float loadLevelDelay = 3f;
+    public BoardManager boardManager;
 
 
     public void SpawnObject()
     {   
-        if (!stopSpawning)
+        if (!stopSpawning && spawnCount != spawnLimit)
         {
             spawnee = gameTiles[Random.Range(0, gameTiles.Length)];
             generatedTile  = Instantiate(spawnee, transform.position, transform.rotation);
             generatedTile.tag = "Tile";
-
+            spawnCount++;
             StartAnimating();
         }
+        else
+        {
+            
+            List<GameTile> lockedInGameTiles = new List<GameTile>(FindObjectsOfType<GameTile>());
+            lockedInGameTiles.RemoveAll(x => !x.isLockedIn);
+            boardManager.GenerateScore(lockedInGameTiles);
+            
+            Invoke("LoadScoreScreen", loadLevelDelay);
+        }
+    }
+
+    private void LoadScoreScreen()
+    {
+        Debug.Log("Loading Score Screen");
+        SceneManager.LoadSceneAsync("ScoreScreen");
     }
 
     private void StopAnimating()
@@ -67,7 +88,7 @@ public class TimedSpawn : MonoBehaviour
         }
     }
 
-    private static void DestroyUnlockedTiles()
+    private void DestroyUnlockedTiles()
     {
         GameObject[] expiredTiles = GameObject.FindGameObjectsWithTag("Tile");
         foreach (GameObject tile in expiredTiles)
@@ -81,6 +102,7 @@ public class TimedSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (gameTiles == null)
             gameTiles = GameObject.FindGameObjectsWithTag("TemplateTile");
 

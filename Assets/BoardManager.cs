@@ -1,27 +1,42 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
+    public static BoardManager boardManager;
+
     private const float GRID_HEIGHT = 5.0f;
     private const float GRID_WIDTH = 5.0f;
-    [SerializeField] private int occupiedSpacesCount = 0;
+    [SerializeField] private static int occupiedSpacesCount = 0;        
+    public static int totalScore = 0;
 
-    [SerializeField] private bool[,] boardState = new bool[5, 5];
-    public bool[,] BoardState { get => boardState; set => boardState = value; }
+    [SerializeField] private static bool[,] boardState = new bool[5, 5];
+    public static bool[,]  BoardState { get => boardState; set => boardState = value; }
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+        MakeThisTheOnlyBoardManager();
     }
 
-
     // Update is called once per frame
-    void Update()
+    void MakeThisTheOnlyBoardManager()
     {   
+        if (boardManager == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            boardManager = this;
+        }
+        else
+        {
+            if (boardManager != this)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     public void DetermineBoardState()
@@ -45,6 +60,15 @@ public class BoardManager : MonoBehaviour
                     occupiedSpacesCount++;
                 }
             }
+        }
+    }
+
+    internal void GenerateScore(List<GameTile> gameTiles)
+    {
+        totalScore = 0;
+        foreach (GameTile gameTile in gameTiles)
+        {
+            totalScore += gameTile.scoreValue;
         }
     }
 }

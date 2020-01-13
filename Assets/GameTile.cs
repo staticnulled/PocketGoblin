@@ -14,6 +14,7 @@ public class GameTile : MonoBehaviour
     public bool isLockedIn = false;
     [SerializeField] private bool isInsideTile = false;
     [SerializeField] private bool isValidPosition;
+    public int scoreValue;
 
     public BoardManager boardManager;
 
