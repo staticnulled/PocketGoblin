@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class IntroText : MonoBehaviour
 {
-    [SerializeField] float loadLevelDelay = 3f;
+    [SerializeField] float loadLevelDelay = 8f;
     // Start is called before the first frame update
     void Start()
     {
