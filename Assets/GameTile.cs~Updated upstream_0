@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Draggable : MonoBehaviour
+public class GameTile : MonoBehaviour
 {
     [SerializeField] private float startPosX;
     [SerializeField] float startPosY;
     [SerializeField] private Vector2 mousePos;
     [SerializeField] private Vector2 oldPosition;
     [SerializeField] private bool isInsideGrid = false;
-    [SerializeField] private bool isInsideBackground = false;    
+    [SerializeField] private bool isInsideBackground = true;    
     [SerializeField] private bool isBeingHeld = false;
-    [SerializeField] private bool isLockedIn = false;
+    public bool isLockedIn = false;
     [SerializeField] private bool isInsideTile = false;
+    [SerializeField] private bool isValidPosition;
+
+    public BoardManager boardManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,6 +36,7 @@ public class Draggable : MonoBehaviour
         }
     }
 
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!isLockedIn)
@@ -52,37 +56,22 @@ public class Draggable : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        
-
-        //if (isBeingHeld && isInsideGrid & collision.CompareTag("Tile"))
-        //{
-        //    var collisionDirection = (gameObject.transform.position - collision.transform.position);
-
-        //       isCollidingWithTile = true;
-        //}
-        //else
-        //{            
-        //    isCollidingWithTile = false;
-        //}
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (isBeingHeld)
         {
             if (Input.GetMouseButtonDown(1))
-            {
-                Debug.Log("rightclick");
+            {                
                 transform.Rotate(Vector3.forward * -90);
                 //TODO:recenter object on rotate
                 gameObject.transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
 
+            //Find mouse position
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+            //Enable snapping when:
             if (isInsideGrid && !isInsideBackground && !isInsideTile)
             {             
                 //snap to grid
@@ -100,17 +89,17 @@ public class Draggable : MonoBehaviour
 
     //Move the piece on LMB hold
     private void OnMouseDown()
-    {
-        this.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
-        if (Input.GetMouseButtonDown(0))
+    {        
+        if (Input.GetMouseButtonDown(0) && !isLockedIn)
         {
+            this.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
+
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             startPosX = mousePos.x - this.transform.localPosition.x;
             startPosY = mousePos.y - this.transform.localPosition.y;
 
             oldPosition = this.transform.localPosition;
-
-            isLockedIn = false;
+                        
             isBeingHeld = true;
         }
 
@@ -140,20 +129,13 @@ public class Draggable : MonoBehaviour
 
     private bool IsValidFinalPlacement()
     {
-        bool isValidPosition;
+        //raycast coordinates of item;
 
-        //Part way in two zones. Bad placement.
-        if (isInsideGrid && isInsideBackground)
+        if (isInsideBackground) //in the background
         {
             isValidPosition = false;
         }
-        //In neither. Means colliding with other tile in grid or off screen.
-        else if (!isInsideGrid && !isInsideBackground)
-        {
-            isValidPosition = false;
-        }
-        //Inside tile and grid. outside of bg. Invalid
-        else if (isInsideGrid && isInsideTile)
+        else if (isInsideGrid && isInsideTile) //in grid but in a tile!
         {
             isValidPosition = false;
         }
@@ -161,6 +143,7 @@ public class Draggable : MonoBehaviour
         {
             isValidPosition = true;
         }
+
         return isValidPosition;
 
     }
