@@ -14,6 +14,9 @@ public class TimedSpawn : MonoBehaviour
     public float handDelay = 0.25f;
     private Vector2 direction = Vector2.down;
     static private GameObject generatedTile;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip newItemAvailableSound;
+
 
     public void SpawnObject()
     {   
@@ -39,12 +42,15 @@ public class TimedSpawn : MonoBehaviour
 
     private void AnimateHandAndItem()
     {
-        Debug.Log(Hand.transform.position.y);
+        //Debug.Log(Hand.transform.position.y);
         if (Hand.transform.position.y <= 4)
         {        
             direction = Vector2.up;
             DestroyUnlockedTiles();
             StopAnimating();
+                        
+            audioSource.PlayOneShot(newItemAvailableSound);
+
             Invoke("StartAnimating", handDelay);
         }
         else if (Hand.transform.position.y >= 10 && direction == Vector2.up)
@@ -78,7 +84,7 @@ public class TimedSpawn : MonoBehaviour
         if (gameTiles == null)
             gameTiles = GameObject.FindGameObjectsWithTag("TemplateTile");
 
-        Debug.Log(gameTiles.Length);
+        //Debug.Log(gameTiles.Length);
 
         InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
     }
