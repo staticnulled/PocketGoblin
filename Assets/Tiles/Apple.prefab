@@ -131,6 +131,7 @@ MonoBehaviour:
   isLockedIn: 0
   isInsideTile: 0
   isValidPosition: 0
+  scoreValue: 1
   boardManager: {fileID: 0}
 --- !u!50 &1348412166
 Rigidbody2D:

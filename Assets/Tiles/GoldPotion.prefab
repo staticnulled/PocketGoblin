@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6936471036270969336
+--- !u!1 &633535853148642816
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6936471036270969340}
-  - component: {fileID: 6936471036270969341}
-  - component: {fileID: 6936471036270969338}
-  - component: {fileID: 6936471036270969339}
-  - component: {fileID: 8287467134308551605}
+  - component: {fileID: 6673240496414543873}
+  - component: {fileID: 6283210277255377037}
+  - component: {fileID: -4307045239830695898}
+  - component: {fileID: 5314037128072082822}
+  - component: {fileID: 1027980949437999726}
   m_Layer: 0
-  m_Name: RedApple
+  m_Name: GoldPotion
   m_TagString: TemplateTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6936471036270969340
+--- !u!4 &6673240496414543873
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936471036270969336}
+  m_GameObject: {fileID: 633535853148642816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.935298, y: 14.512793, z: 0}
+  m_LocalPosition: {x: -0.08054066, y: 2.0524607, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6936471036270969341
+--- !u!212 &6283210277255377037
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936471036270969336}
+  m_GameObject: {fileID: 633535853148642816}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b860f8e32365794fb61d70df5b06501, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a2ced1a5bc0932245aa2733b3581ef59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,13 +83,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6936471036270969338
+--- !u!114 &-4307045239830695898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633535853148642816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486fa0a8209f9034bad1d6fc7c082465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPosX: 0
+  startPosY: 0
+  mousePos: {x: 0, y: 0}
+  oldPosition: {x: 0, y: 0}
+  isInsideGrid: 0
+  isInsideBackground: 1
+  isBeingHeld: 0
+  isLockedIn: 0
+  isInsideTile: 0
+  isValidPosition: 0
+  scoreValue: 3
+  boardManager: {fileID: 0}
+--- !u!50 &5314037128072082822
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633535853148642816}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1027980949437999726
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936471036270969336}
+  m_GameObject: {fileID: 633535853148642816}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -109,48 +154,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
---- !u!114 &6936471036270969339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936471036270969336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 486fa0a8209f9034bad1d6fc7c082465, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosX: 0
-  startPosY: 0
-  mousePos: {x: 0, y: 0}
-  oldPosition: {x: 0, y: 0}
-  isInsideGrid: 0
-  isInsideBackground: 0
-  isBeingHeld: 0
-  isLockedIn: 0
-  isInsideTile: 0
-  isValidPosition: 0
-  scoreValue: 2
-  boardManager: {fileID: 0}
---- !u!50 &8287467134308551605
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936471036270969336}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

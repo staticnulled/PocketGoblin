@@ -152,4 +152,5 @@ MonoBehaviour:
   isLockedIn: 0
   isInsideTile: 0
   isValidPosition: 0
+  scoreValue: 16
   boardManager: {fileID: 0}

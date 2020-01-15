@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 626339340}
   - component: {fileID: 626339341}
   m_Layer: 0
-  m_Name: Sword Tile
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,6 +136,7 @@ MonoBehaviour:
   isLockedIn: 0
   isInsideTile: 0
   isValidPosition: 0
+  scoreValue: 11
   boardManager: {fileID: 0}
 --- !u!50 &2105409502451940315
 Rigidbody2D:

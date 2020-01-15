@@ -56,6 +56,7 @@ MonoBehaviour:
   isLockedIn: 0
   isInsideTile: 0
   isValidPosition: 0
+  scoreValue: 8
   boardManager: {fileID: 0}
 --- !u!50 &330505025
 Rigidbody2D:
@@ -120,7 +121,7 @@ GameObject:
   - component: {fileID: 8457677475739271555}
   - component: {fileID: 8457677475739271554}
   m_Layer: 0
-  m_Name: Axe Tile
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
